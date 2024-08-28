@@ -2,18 +2,20 @@ import MagicButton from "./ui/MagicButton";
 import { Spotlight } from "./ui/Spotlight";
 import { TextGenerateEffect } from "./ui/TextGenerateEffect";
 import { FaLocationArrow } from "react-icons/fa6";
+import CourseCrafter from "../public/CourseCrafter.webp";
 const Hero = () => {
   return (
     <div className="pb-20 pt-36">
-      <div>
+      {/* <div>
         <Spotlight
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
           fill="white"
         />
-        <Spotlight className="h-[80vh] w-[50vw] top-40 left-full" fill="red" />
-        <Spotlight className="left-full top-40 h-[80vh] w-[50vw]" fill="blue" />
-      </div>
-
+        <Spotlight
+          className="top-40 right-10 md:-right-96 -rotate-180 md:top-40 h-screen"
+          fill="white"
+        />
+      </div> */}
       <div
         className="h-screen w-full dark:bg-black-100 bg-white dark:bg-grid-white/[0.03] bg-grid-black-100/[0.2]
        absolute top-0 left-0 flex items-center justify-center"
@@ -51,6 +53,12 @@ const Hero = () => {
           </a>
         </div>
       </div>
+      {/* <div className="z-50">
+        <MacbookScroll
+          src={CourseCrafter}
+          title="Hello I am Vikas Tiwari"
+        ></MacbookScroll>
+      </div> */}
     </div>
   );
 };

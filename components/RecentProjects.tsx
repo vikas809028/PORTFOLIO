@@ -65,16 +65,6 @@ const RecentProjects = () => {
                     </div>
                   ))}
                 </div>
-
-                <div className="flex justify-center items-center">
-                  <a
-                    className="flex lg:text-xl md:text-xs text-sm text-purple"
-                    href={"tic-tac-toe-alpha-indol-45.vercel.app"}
-                  >
-                    Check Live Site
-                  </a>
-                  <FaLocationArrow className="ms-3" color="#CBACF9" />
-                </div>
               </div>
             </PinContainer>
           </div>
