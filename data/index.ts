@@ -75,7 +75,7 @@ export const navItems = [
       des: "An online education platform featuring personalized courses, and affordable pricing.",
       img: "/CourseCrafter.webp",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://coursecrafter.com", // Update this with the correct link
+      link: "https://course-crafter-lake.vercel.app",
     },
     {
       id: 2,
@@ -83,23 +83,22 @@ export const navItems = [
       des: "A interactive TicTacToe game developed to enhance knowledge modern web technologies.",
       img: "/tictac.png",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://tictactoe.com",
+      link: "https://tic-tac-toe-alpha-indol-45.vercel.app/",
     },
     {
       id: 3,
       title: "CustomerQueryManagement",
       des: "A system for managing and tracking customer queries efficiently with a user-friendly dashboard.",
-      img: "/cqm.jpg", // Add the correct image file
+      img: "/cqm.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://customerquery.com", // Update with the correct link
-    },
+      link: "", },
     {
       id: 4,
       title: "TodoApp",
       des: "A simple yet powerful Todo app to manage tasks with features like CRUD operations and pagination.",
-      img: "/todo.jpg", // Add the correct image file
+      img: "/todo.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://todoapp.com", // Update with the correct link
+      link: "https://todo-tau-eosin.vercel.app",
     },
   ];
   
