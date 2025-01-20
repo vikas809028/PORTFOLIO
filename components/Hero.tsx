@@ -1,60 +1,50 @@
-import MagicButton from "./ui/MagicButton";
-import { Spotlight } from "./ui/Spotlight";
-import { TextGenerateEffect } from "./ui/TextGenerateEffect";
+import React, { Suspense, lazy } from "react";
+import Image from "next/image";
 import { FaLocationArrow } from "react-icons/fa6";
 import CourseCrafter from "../public/CourseCrafter.webp";
+
+const MagicButton = lazy(() => import("./ui/MagicButton"));
+const Spotlight = lazy(() => import("./ui/Spotlight"));
+const TextGenerateEffect = lazy(() => import("./ui/TextGenerateEffect"));
+
 const Hero = () => {
   return (
-    <div className="pb-20 pt-36">
-      {/* <div>
-        <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
-          fill="white"
-        />
-        <Spotlight
-          className="top-40 right-10 md:-right-96 -rotate-180 md:top-40 h-screen"
-          fill="white"
-        />
-      </div> */}
-      <div
-        className="h-screen w-full dark:bg-black-100 bg-white dark:bg-grid-white/[0.03] bg-grid-black-100/[0.2]
-       absolute top-0 left-0 flex items-center justify-center"
-      >
-        <div
-          // chnage the bg to bg-black-100, so it matches the bg color and will blend in
-          className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black-100
-         bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
-        />
-      </div>
+    <div className="pb-8 pt-36">
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* Lazy-loaded components */}
+        <div className="flex justify-center relative my-20 z-10">
+          <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
+            <TextGenerateEffect
+              words="Transforming Concepts into Seamless User Experiences"
+              className="text-center text-[40px] md:text-5xl lg:text-6xl"
+            />
 
-      <div className="flex justify-center relative my-20 z-10">
-        <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
-          <TextGenerateEffect
-            words="Transforming Concepts into Seamless User Experiences"
-            className="text-center text-[40px] md:text-5xl lg:text-6xl"
-          />
+            <p className="text-center p-4 md:tracking-wider my-4 text-sm md:text-lg lg:text-xl">
+              Hi! I’m Vikas, a passionate MERN Developer building scalable web
+              apps, turning ideas into reality, and constantly exploring new
+              technologies.
+            </p>
 
-          <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-xl">
-            Hi! I’m Vikas, a passionate MERN Developer building scalable web
-            apps, turning ideas into reality, and constantly exploring new
-            technologies.
-          </p>
-
-          <a href="#about">
+            <div className="flex flex-wrap gap-4 justify-center">
+            <a href="#about" className="m-4">
+              <MagicButton
+                title="Show my work"
+                icon={<FaLocationArrow />}
+                position="right"
+              />
+              
+            </a>
+            <a className="m-4" href="https://drive.google.com/file/d/1fusTlhuvpbGfvukQGUWTBf7xNtbbNNGt/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
             <MagicButton
-              title="Show my work"
+              title="My Resume"
               icon={<FaLocationArrow />}
               position="right"
             />
           </a>
+            </div>
+          </div>
         </div>
-      </div>
-      {/* <div className="z-50">
-        <MacbookScroll
-          src={CourseCrafter}
-          title="Hello I am Vikas Tiwari"
-        ></MacbookScroll>
-      </div> */}
+      </Suspense>
     </div>
   );
 };
