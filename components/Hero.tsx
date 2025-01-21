@@ -26,8 +26,8 @@ const Hero = () => {
               technologies.
             </p>
 
-            <div className="flex flex-wrap gap-4 justify-center">
-            <a href="#about" className="m-4">
+            <div className="flex flex-wrap gap-2 justify-center">
+            <a href="#about" className="m-2">
               <MagicButton
                 title="Show my work"
                 icon={<FaLocationArrow />}
@@ -35,7 +35,7 @@ const Hero = () => {
               />
               
             </a>
-            <a className="m-4" href="https://drive.google.com/file/d/1fusTlhuvpbGfvukQGUWTBf7xNtbbNNGt/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
+            <a className="m-2" href="https://drive.google.com/file/d/1fusTlhuvpbGfvukQGUWTBf7xNtbbNNGt/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
             <MagicButton
               title="My Resume"
               icon={<FaLocationArrow />}
