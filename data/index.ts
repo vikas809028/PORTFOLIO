@@ -75,7 +75,7 @@ export const navItems = [
       des: "An online education platform featuring personalized courses, and affordable pricing.",
       img: "/CourseCrafter.webp",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://course-crafter-lake.vercel.app",
+      link: "https://coursecrafter4u.vercel.app",
     },
     {
       id: 2,
@@ -91,7 +91,7 @@ export const navItems = [
       des: "A system for managing and tracking customer queries efficiently with a user-friendly dashboard.",
       img: "/cqm.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "", },
+      link: "https://portfoliovikastiwari.vercel.app", },
     {
       id: 4,
       title: "TodoApp",
