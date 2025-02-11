@@ -9,7 +9,7 @@ const TextGenerateEffect = lazy(() => import("./ui/TextGenerateEffect"));
 
 const Hero = () => {
   return (
-    <div className="pb-8 pt-36">
+    <div className="pb-12 pt-36">
       <Suspense fallback={<div>Loading...</div>}>
       
         {/* Lazy-loaded components */}
