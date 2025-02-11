@@ -98,7 +98,7 @@ export const navItems = [
       des: "A simple yet powerful Todo app to manage tasks with features like CRUD operations and pagination.",
       img: "/todo.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://apnatodo.app",
+      link: "https://apnatodo.vercel.app",
     },
   ];
   
