@@ -83,7 +83,7 @@ export const navItems = [
       des: "A interactive TicTacToe game developed to enhance knowledge modern web technologies.",
       img: "/tictac.png",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://tic-tac-toe-alpha-indol-45.vercel.app/",
+      link: "https://tictactoe4u.vercel.app/",
     },
     {
       id: 3,
@@ -98,7 +98,7 @@ export const navItems = [
       des: "A simple yet powerful Todo app to manage tasks with features like CRUD operations and pagination.",
       img: "/todo.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://todo-tau-eosin.vercel.app",
+      link: "https://apnatodo.app",
     },
   ];
   
