@@ -26,7 +26,7 @@ const Hero = () => {
               technologies.
             </p>
 
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex flex-wrap mt-4 gap-2 justify-center">
             <a href="#about" className="m-2">
               <MagicButton
                 title="Show my work"
