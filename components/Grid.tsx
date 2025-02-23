@@ -1,11 +1,27 @@
-import { gridItems } from "@/data";
+"use client"
+import { useEffect, useState } from "react";
+import { gridItems, gridItemsOnMobile } from "@/data";
 import { BentoGrid, BentoGridItem } from "./ui/BentoGrid";
 
 const Grid = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const itemsToDisplay = isMobile ? gridItemsOnMobile : gridItems;
+
   return (
     <section id="about">
       <BentoGrid className="w-full pb-4 pt-8">
-        {gridItems.map((item, i) => (
+        {itemsToDisplay.map((item, i) => (
           <BentoGridItem
             id={item.id}
             key={i}

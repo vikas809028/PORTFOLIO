@@ -1,15 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 
 "use client";
-
 import { useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
-
-// Also install this npm i --save-dev @types/react-lottie
 import Lottie from "react-lottie";
-
 import { cn } from "@/utils/cn";
-
 import { BackgroundGradientAnimation } from "./GradientBg";
 import GridGlobe from "./GridGlobe";
 import animationData from "@/data/confetti.json";
@@ -25,7 +20,6 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        // change gap-4 to gap-8, change grid-cols-3 to grid-cols-5, remove md:auto-rows-[18rem], add responsive code
         "grid grid-cols-1 md:grid-cols-6 lg:grid-cols-5 md:grid-row-7 gap-4 lg:gap-8 mx-auto",
         className
       )}
@@ -89,8 +83,9 @@ export const BentoGridItem = ({
           "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
       }}
     >
-      {/* add img divs */}
+      
       <div className={`${id === 6 && "flex justify-center"} h-full`}>
+
         <div className="w-full h-full absolute">
           {img && (
             <img
@@ -100,7 +95,16 @@ export const BentoGridItem = ({
             />
           )}
         </div>
-        <div
+        
+       
+
+        {id === 6 && (
+          <BackgroundGradientAnimation>
+            <div className="absolute z-50 inset-0 flex items-center justify-center text-white font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl"></div>
+          </BackgroundGradientAnimation>
+        )}
+        
+         <div 
           className={`absolute right-0 -bottom-5 ${
             id === 5 && "w-full opacity-80"
           } `}
@@ -113,11 +117,6 @@ export const BentoGridItem = ({
             />
           )}
         </div>
-        {id === 6 && (
-          <BackgroundGradientAnimation>
-            <div className="absolute z-50 inset-0 flex items-center justify-center text-white font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl"></div>
-          </BackgroundGradientAnimation>
-        )}
 
         <div
           className={cn(
@@ -135,15 +134,15 @@ export const BentoGridItem = ({
           </div>
 
           
-          <span  className="hidden md:block" >
+          <span  className="hidden md:block " >
 
           {id === 2 && <GridGlobe/>}
           </span>
 
-          {/* Tech stack list div */}
+         
           {id === 3 && (
             <div className="flex gap-1 lg:gap-5 w-fit absolute -right-3 lg:-right-2">
-              {/* tech stack lists */}
+             
               <div className="flex flex-col gap-3 md:gap-3 lg:gap-8">
                 {leftLists.map((item, i) => (
                   <span
@@ -170,6 +169,7 @@ export const BentoGridItem = ({
               </div>
             </div>
           )}
+
           {id === 6 && (
             <div className="mt-5 relative">
               <div
@@ -189,6 +189,7 @@ export const BentoGridItem = ({
               />
             </div>
           )}
+           
         </div>
       </div>
     </div>
