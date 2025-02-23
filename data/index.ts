@@ -194,7 +194,8 @@ export const navItems = [
   export const workExperience = [
     {
       id: 1,
-      title: "Full Stack Intern at SoftPro India Computer Engineering ltd.",
+      title: "Full Stack Intern",
+      companyname:"Softpro India Computer Engineering ltd.,Aliganj,Lucknow",
       desc: "Assisted in the development of a web-based platform using React.js, enhancing interactivity and improving user experience.",
       className: "md:col-span-1",
       thumbnail: "/exp1.svg",
@@ -202,6 +203,7 @@ export const navItems = [
     {
       id: 2,
       title: "Software Developer Intern",
+      companyname:"Prutor@IIT Kanpur,Kanpur",
       desc: "Explored new technologies and gained hands-on experience in development of sathee project, leadership, and event coordination.",
       className: "md:col-span-2",
       thumbnail: "/exp2.svg",
