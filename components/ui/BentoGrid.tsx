@@ -135,7 +135,10 @@ export const BentoGridItem = ({
           </div>
 
           
-          {id === 2 && <GridGlobe  />}
+          <span  className="hidden md:block" >
+
+          {id === 2 && <GridGlobe/>}
+          </span>
 
           {/* Tech stack list div */}
           {id === 3 && (
@@ -174,7 +177,6 @@ export const BentoGridItem = ({
                   copied ? "block" : "block"
                 }`}
               >
-                {/* <img src="/confetti.gif" alt="confetti" /> */}
                 <Lottie options={defaultOptions} height={200} width={400} />
               </div>
 
