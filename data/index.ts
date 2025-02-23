@@ -206,7 +206,7 @@ export const navItems = [
       companyname:"Prutor@IIT Kanpur,Kanpur",
       desc: "Explored new technologies and gained hands-on experience in development of sathee project, leadership, and event coordination.",
       className: "md:col-span-2",
-      thumbnail: "/exp2.svg",
+      thumbnail: "/exp1.svg",
     },
   ];
   
