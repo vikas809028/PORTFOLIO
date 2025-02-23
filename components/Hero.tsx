@@ -17,7 +17,7 @@ const Hero = () => {
               className="text-center text-[40px] md:text-5xl lg:text-6xl"
             />
 
-            <p className="text-center p-4 md:tracking-wider my-4 text-sm md:text-lg lg:text-xl">
+            <p className="text-center p-4 md:tracking-wider my-4 text-md md:text-lg lg:text-xl">
               Hi! I’m Vikas, a passionate Full Stack Developer building scalable web
               apps, turning ideas into reality, and constantly trying to explore new
               technologies.
