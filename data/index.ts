@@ -49,7 +49,7 @@ export const navItems = [
    
     {
         id: 5,
-        title: "Currently working on a CourseCrafter project",
+        title: "Currently working on a Blood Bridge Web Application",
         description: "",
         className: "md:col-span-3 md:row-span-2",
         imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
