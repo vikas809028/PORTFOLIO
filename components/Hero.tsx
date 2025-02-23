@@ -1,10 +1,7 @@
 import React, { Suspense, lazy } from "react";
-import Image from "next/image";
 import { FaLocationArrow } from "react-icons/fa6";
-import CourseCrafter from "../public/CourseCrafter.webp";
 
 const MagicButton = lazy(() => import("./ui/MagicButton"));
-const Spotlight = lazy(() => import("./ui/Spotlight"));
 const TextGenerateEffect = lazy(() => import("./ui/TextGenerateEffect"));
 
 const Hero = () => {
