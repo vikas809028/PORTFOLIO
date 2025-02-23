@@ -18,8 +18,8 @@ const Hero = () => {
             />
 
             <p className="text-center p-4 md:tracking-wider my-4 text-sm md:text-lg lg:text-xl">
-              Hi! I’m Vikas, a passionate MERN Developer building scalable web
-              apps, turning ideas into reality, and constantly exploring new
+              Hi! I’m Vikas, a passionate Full Stack Developer building scalable web
+              apps, turning ideas into reality, and constantly trying to explore new
               technologies.
             </p>
 
