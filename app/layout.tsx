@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Vikas's Portfolio",
   description: "simple but minimalist",
+  
 };
 
 export default function RootLayout({
@@ -17,6 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/exp1.svg" sizes="any" />
+        
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -30,3 +35,4 @@ export default function RootLayout({
     </html>
   );
 }
+
