@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio
 
-## Getting Started
+Welcome to my personal portfolio! This project showcases my skills, projects, and experience as a Full Stack Developer and DevOps Enthusiast.
 
-First, run the development server:
+## 🌟 Overview
+
+This portfolio highlights my work in building scalable systems, contributions to open source, and expertise in the MERN stack (MongoDB, Express, React, Node.js). It serves as a central place to view my projects, blog posts, and contact information.
+
+## 🚀 Tech Stack
+
+- **Frontend:** React.js, HTML5, CSS3, JavaScript
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **DevOps:** Docker, GitHub Actions
+- **Other:** Responsive design, SEO optimization
+
+## 🛠️ Features
+
+- Project showcase with details and links
+- Interactive contact form
+- Blog integration
+- Responsive and modern UI
+- Easy navigation
+
+## 📦 Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/vikas809028/PORTFOLIO.git
+cd PORTFOLIO
+npm install
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📌 Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repo and install dependencies.
+2. Start the development server with `npm start`.
+3. Visit `http://localhost:3000` to view the portfolio.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 📝 Customization
 
-## Learn More
+- Edit `src/data/projects.js` to add or update your projects.
+- Update `src/components` to modify sections like About, Contact, or Blog.
+- Change styles in `src/styles` for custom branding.
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is open source under the [MIT License](LICENSE).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📬 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Blog: [vikastiwari.dev](https://vikastiwari.dev)
+- Twitter: [@vikas_tiwari80](https://twitter.com/vikas_tiwari80)
+- Email: vikas809028@gmail.com
+
+---
+
+Built with ❤️ by Vikas Tiwari ([IIT Kanpur](https://prutor.ai))
