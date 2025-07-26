@@ -32,7 +32,7 @@ const Hero = () => {
               />
               
             </a>
-            <a className="m-2" href="https://drive.google.com/file/d/1fusTlhuvpbGfvukQGUWTBf7xNtbbNNGt/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
+            <a className="m-2" href="https://drive.google.com/file/d/1HFrZMCR8zvNjAsrGwZMRg4V610uoRB2X/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
             <MagicButton
               title="My Resume"
               icon={<FaLocationArrow />}

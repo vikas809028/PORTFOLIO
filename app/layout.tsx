@@ -6,9 +6,8 @@ import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Vikas's Portfolio",
-  description: "Explore the portfolio of Vikas Tiwari, a Full stack developer specializing in full-stack web applications. Check out projects, skills, and contact details.",
-  
+  title: "Vikas Tiwari | Full Stack Developer & DevOps Practitioner",
+  description: "Full Stack Developer with DevOps expertise, building scalable web applications at Prutor.ai (IIT Kanpur). Passionate about end-to-end system development, from coding to CI/CD pipelines and cloud infrastructure. Explore my projects showcasing full-stack development and DevOps implementations.",  
 };
 
 export default function RootLayout({
