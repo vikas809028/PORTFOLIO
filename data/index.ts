@@ -146,7 +146,7 @@ export const navItems = [
       des: "A system for managing and tracking customer queries efficiently with a user-friendly dashboard.",
       img: "/cqm.jpg",
       iconLists: ["/re.svg", "/tail.svg", "/ts.svg","/stream.svg"],
-      link: "https://portfoliovikastiwari.vercel.app", },
+      link: "https://vikastiwari.dev", },
     {
       id: 4,
       title: "TodoApp",
