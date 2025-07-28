@@ -202,7 +202,7 @@ export const navItems = [
     },
     {
       id: 2,
-      title: "Software Developer Intern",
+      title: "Software Developer",
       companyname:"Prutor@IIT Kanpur,Kanpur",
       desc: "Explored new technologies and gained hands-on experience in development of sathee project, leadership, and event coordination.",
       className: "md:col-span-2",
