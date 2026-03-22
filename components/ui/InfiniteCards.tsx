@@ -89,7 +89,7 @@ export const InfiniteMovingCards = ({
                 fontSize: "3rem", lineHeight: 1, color: "#a78bfa",
                 opacity: 0.45, marginBottom: 10, fontFamily: "Georgia, serif",
               }}>
-                "
+                &ldquo;
               </div>
 
               {/* quote text */}
