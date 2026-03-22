@@ -8,15 +8,11 @@ import React, { useEffect, useState } from "react";
 export const InfiniteMovingCards = ({
   items,
   direction = "left",
-  speed = "fast",
+  speed = "slow",
   pauseOnHover = true,
   className,
 }: {
-  items: {
-    quote: string;
-    name: string;
-    title: string;
-  }[];
+  items: { quote: string; name: string; title: string }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -24,112 +20,112 @@ export const InfiniteMovingCards = ({
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     addAnimation();
   }, []);
-  const [start, setStart] = useState(false);
+
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
+      Array.from(scrollerRef.current.children).forEach((item) => {
+        scrollerRef.current!.appendChild(item.cloneNode(true));
       });
-
       getDirection();
       getSpeed();
       setStart(true);
     }
   }
+
   const getDirection = () => {
     if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "forwards"
-        );
-      } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse"
-        );
-      }
+      containerRef.current.style.setProperty(
+        "--animation-direction",
+        direction === "left" ? "forwards" : "reverse"
+      );
     }
   };
+
   const getSpeed = () => {
     if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "120s");
-      }
+      const dur = speed === "fast" ? "40s" : speed === "normal" ? "70s" : "110s";
+      containerRef.current.style.setProperty("--animation-duration", dur);
     }
   };
+
   return (
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 w-screen overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 w-screen overflow-hidden",
+        "[mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]",
         className
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          " flex min-w-full shrink-0 gap-16 py-4 w-max flex-nowrap",
-          start && "animate-scroll ",
+          "flex min-w-full shrink-0 gap-5 py-4 w-max flex-nowrap",
+          start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
         {items.map((item, idx) => (
           <li
-            //   change md:w-[450px] to md:w-[60vw] , px-8 py-6 to p-16, border-slate-700 to border-slate-800
-            className="w-[90vw] max-w-full relative rounded-2xl border border-b-0
-             flex-shrink-0 border-slate-800 p-5 md:p-16 md:w-[60vw]"
-            style={{
-              background: "rgb(4,7,29)",
-              backgroundColor:
-                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
-            }}
-
             key={idx}
+            style={{
+              width: "calc(33vw - 1.5rem)",   /* exactly 3 visible at a time */
+              minWidth: 320,                   /* floor on small screens */
+              flexShrink: 0,
+              borderRadius: 20,
+              border: "1px solid rgba(255,255,255,0.09)",
+              background: "linear-gradient(145deg, rgba(4,7,29,1) 0%, rgba(10,12,32,1) 100%)",
+              padding: "28px 30px",
+            }}
           >
             <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
-              ></div>
-              
-              <span className=" relative z-20 text-sm md:text-lg leading-[1.6] text-white font-normal">
+              {/* quote mark */}
+              <div style={{
+                fontSize: "3rem", lineHeight: 1, color: "#a78bfa",
+                opacity: 0.45, marginBottom: 10, fontFamily: "Georgia, serif",
+              }}>
+                "
+              </div>
+
+              {/* quote text */}
+              <p style={{
+                fontSize: "0.97rem", lineHeight: 1.75,
+                color: "#94a3b8", fontWeight: 400,
+                display: "-webkit-box", WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical", overflow: "hidden",
+                margin: 0,
+              }}>
                 {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                
-                <div className="me-3 ">
-                  <img
-                    src="/ceo.jpeg"
-                    width={"50px"}
-                    className="rounded-full"
-                    height={"50px"}
-                    alt="profile"
-                  />
-                </div>
-                <span className="flex flex-col gap-1">
-                  {/* change text color, font-normal to font-bold, text-xl */}
-                  <span className="text-xl font-bold leading-[1.6] text-white">
+              </p>
+
+              {/* author row */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: 14,
+                marginTop: 20, paddingTop: 16,
+                borderTop: "1px solid rgba(255,255,255,0.06)",
+              }}>
+                <img
+                  src="/ceo.jpeg"
+                  alt={item.name}
+                  style={{ width: 44, height: 44, borderRadius: "50%",
+                    border: "2px solid rgba(167,139,250,0.4)", flexShrink: 0,
+                    objectFit: "cover" }}
+                />
+                <div>
+                  <p style={{ margin: 0, fontSize: "0.97rem", fontWeight: 700,
+                    color: "#f1f5f9", lineHeight: 1.3 }}>
                     {item.name}
-                  </span>
-                  {/* change text color */}
-                  <span className=" text-sm leading-[1.6] text-white-200 font-normal">
+                  </p>
+                  <p style={{ margin: 0, fontSize: "0.82rem", color: "#64748b",
+                    fontWeight: 400, marginTop: 2 }}>
                     {item.title}
-                  </span>
-                </span>
+                  </p>
+                </div>
               </div>
             </blockquote>
           </li>
