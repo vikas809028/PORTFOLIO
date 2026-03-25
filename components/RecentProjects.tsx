@@ -8,6 +8,14 @@ import { projects } from "@/data";
 
 function ProjectCard({ item }: { item: (typeof projects)[0] }) {
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div
@@ -15,7 +23,8 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        width: 380,
+        width: isMobile ? "100%" : 380,
+        maxWidth: isMobile ? "100%" : 380,
         borderRadius: 20,
         border: `1px solid ${hovered ? "rgba(139,92,246,0.5)" : "rgba(255,255,255,0.08)"}`,
         background:
@@ -24,11 +33,12 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
-        transform: hovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: hovered
+        transform: hovered && !isMobile ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: hovered && !isMobile
           ? "0 20px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.15)"
           : "0 4px 24px rgba(0,0,0,0.35)",
         transition: "all 0.3s ease",
+        margin: isMobile ? "0 auto" : 0,
       }}
     >
       {/* image */}
@@ -36,7 +46,7 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
         style={{
           position: "relative",
           width: "100%",
-          height: 210,
+          height: isMobile ? 180 : 210,
           background: "#0d1030",
         }}
       >
@@ -44,11 +54,11 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
           src={item.img}
           alt={item.title}
           fill
-          sizes="380px"
+          sizes="(max-width: 640px) 100vw, 380px"
           style={{
             objectFit: "cover",
             objectPosition: "top center",
-            borderRadius: "20px",
+            borderRadius: "20px 20px 0 0",
           }}
         />
       </div>
@@ -56,17 +66,17 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
       {/* content */}
       <div
         style={{
-          padding: "18px 24px 22px",
+          padding: isMobile ? "16px 20px 20px" : "18px 24px 22px",
           display: "flex",
           flexDirection: "column",
-          gap: 10,
+          gap: isMobile ? 8 : 10,
           flex: 1,
         }}
       >
         <h3
           style={{
             margin: 0,
-            fontSize: "1.1rem",
+            fontSize: isMobile ? "1rem" : "1.1rem",
             fontWeight: 700,
             color: "#f1f5f9",
             whiteSpace: "nowrap",
@@ -80,11 +90,11 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
         <p
           style={{
             margin: 0,
-            fontSize: "0.85rem",
-            lineHeight: 1.65,
+            fontSize: isMobile ? "0.8rem" : "0.85rem",
+            lineHeight: isMobile ? 1.6 : 1.65,
             color: "#64748b",
             display: "-webkit-box",
-            WebkitLineClamp: 2,
+            WebkitLineClamp: isMobile ? 3 : 2,
             WebkitBoxOrient: "vertical",
             overflow: "hidden",
           }}
@@ -97,18 +107,19 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            paddingTop: 14,
+            alignItems: "center",
+            paddingTop: isMobile ? 12 : 14,
             marginTop: "auto",
             borderTop: "1px solid rgba(255,255,255,0.06)",
           }}
         >
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 4 : 0 }}>
             {item.iconLists.map((icon, i) => (
               <div
                 key={i}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: isMobile ? 28 : 30,
+                  height: isMobile ? 28 : 30,
                   borderRadius: "50%",
                   background: "#080814",
                   border: "1px solid rgba(255,255,255,0.12)",
@@ -118,7 +129,7 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
                   marginLeft: i === 0 ? 0 : -8,
                 }}
               >
-                <img src={icon} style={{ width: 13, height: 13 }} />
+                <img src={icon} style={{ width: isMobile ? 12 : 13, height: isMobile ? 12 : 13 }} alt="" />
               </div>
             ))}
           </div>
@@ -131,11 +142,12 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
               display: "flex",
               alignItems: "center",
               gap: 6,
-              fontSize: "0.8rem",
+              fontSize: isMobile ? "0.75rem" : "0.8rem",
               color: hovered ? "#c4b5fd" : "#a78bfa",
+              transition: "color 0.2s ease",
             }}
           >
-            Live Site <FaLocationArrow size={11} />
+            Live Site <FaLocationArrow size={isMobile ? 10 : 11} />
           </a>
         </div>
       </div>
@@ -146,14 +158,24 @@ function ProjectCard({ item }: { item: (typeof projects)[0] }) {
 const RecentProjects = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState({ active: false, startX: 0, scrollLeft: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const onMouseDown = (e: React.MouseEvent) => {
+    if (isMobile) return; // Disable drag on mobile
     const el = trackRef.current;
     if (!el) return;
     setDrag({ active: true, startX: e.pageX, scrollLeft: el.scrollLeft });
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     if (!drag.active || !trackRef.current) return;
     trackRef.current.scrollLeft = drag.scrollLeft - (e.pageX - drag.startX);
   };
@@ -161,13 +183,14 @@ const RecentProjects = () => {
   const onDragEnd = () => setDrag((d) => ({ ...d, active: false }));
 
   return (
-    <div className="py-10" id="projects">
-      <h1 className="heading">
+    <div className="py-10 px-4 md:px-0" id="projects">
+      {/* Heading - centered on all devices */}
+      <h1 className="heading text-center">
         A small selection of{" "}
         <span className="text-purple">recent projects</span>
       </h1>
 
-      <div style={{ position: "relative", marginTop: "4rem" }}>
+      <div style={{ position: "relative", marginTop: isMobile ? "2rem" : "4rem" }}>
         {/* track */}
         <div
           ref={trackRef}
@@ -178,11 +201,15 @@ const RecentProjects = () => {
           className="project-track hide-scrollbar"
           style={{
             display: "flex",
-            gap: "1.5rem",
-            overflowX: "auto",
-            paddingBottom: 20,
-            paddingRight: 100,
-            cursor: drag.active ? "grabbing" : "grab",
+            gap: isMobile ? "1rem" : "1.5rem",
+            overflowX: isMobile ? "visible" : "auto",
+            overflowY: "visible",
+            paddingBottom: isMobile ? 0 : 20,
+            paddingRight: isMobile ? 0 : 100,
+            cursor: !isMobile && drag.active ? "grabbing" : !isMobile ? "grab" : "default",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: isMobile ? "center" : "stretch",
+            justifyContent: isMobile ? "center" : "flex-start",
           }}
         >
           {projects.map((item) => (
@@ -191,25 +218,20 @@ const RecentProjects = () => {
         </div>
       </div>
 
-      {/* ✅ MOBILE FIX ONLY */}
+      {/* Mobile styles */}
       <style jsx>{`
         @media (max-width: 640px) {
           .project-track {
             flex-direction: column !important;
-            overflow-x: hidden !important;
+            overflow-x: visible !important;
             padding-right: 0 !important;
-            gap: 1rem !important;
+            gap: 1.5rem !important;
           }
 
           .project-card {
             width: 100% !important;
             max-width: 100% !important;
-          }
-
-          /* 🔥 IMPORTANT: fix inner spacing overflow */
-          .project-card {
-            width: calc(100% - 10px) !important;
-            margin: 0 auto;
+            margin: 0 auto !important;
           }
         }
 
