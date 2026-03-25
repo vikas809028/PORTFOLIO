@@ -3,24 +3,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { workExperience } from "@/data";
 
+/* ---------- HOOK ---------- */
 function useInView(threshold = 0.2) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const obs = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) { setInView(true); obs.disconnect(); }
+        if (e.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
       },
       { threshold }
     );
+
     obs.observe(el);
     return () => obs.disconnect();
   }, [threshold]);
+
   return { ref, inView };
 }
 
+/* ---------- CARD ---------- */
 function Card({
   card,
   hovered,
@@ -28,126 +37,96 @@ function Card({
   inView,
   index,
   slideFrom,
-}: {
-  card: (typeof workExperience)[0];
-  hovered: boolean;
-  setHovered: (v: boolean) => void;
-  inView: boolean;
-  index: number;
-  slideFrom: "left" | "right";
-}) {
+}: any) {
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setHovered(false)}
       style={{
         width: "100%",
         maxWidth: 600,
-        padding: "28px 32px",
+        padding: "clamp(18px,4vw,28px) clamp(18px,5vw,32px)",
         borderRadius: 18,
-        border: `1px solid ${hovered ? "rgba(139,92,246,0.45)" : "rgba(255,255,255,0.06)"}`,
-        background: hovered ? "rgba(18,20,42,0.95)" : "rgba(12,14,32,0.75)",
+        border: `1px solid ${
+          hovered ? "rgba(139,92,246,0.45)" : "rgba(255,255,255,0.06)"
+        }`,
+        background: hovered
+          ? "rgba(18,20,42,0.95)"
+          : "rgba(12,14,32,0.75)",
         backdropFilter: "blur(14px)",
         boxShadow: hovered
-          ? "0 10px 36px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)"
-          : "0 2px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03)",
+          ? "0 10px 36px rgba(0,0,0,0.55)"
+          : "0 2px 14px rgba(0,0,0,0.35)",
         opacity: inView ? 1 : 0,
         transform: inView
           ? "translateX(0)"
           : slideFrom === "left"
           ? "translateX(-32px)"
           : "translateX(32px)",
-        transition: `opacity 0.55s ease ${index * 120}ms, transform 0.55s cubic-bezier(0.22,1,0.36,1) ${index * 120}ms, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease`,
-        cursor: "default",
+        transition: `all 0.5s ease ${index * 100}ms`,
       }}
     >
-      {/* top row */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
+      {/* TOP */}
+      <div style={{ display: "flex", gap: 16 }}>
         <div
           style={{
-            width: 58,
-            height: 58,
-            borderRadius: 14,
+            width: 52,
+            height: 52,
+            borderRadius: 12,
             background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.08)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            flexShrink: 0,
-            overflow: "hidden",
           }}
         >
           <img
             src={card.thumbnail}
             alt={card.companyname}
-            style={{ width: 38, height: 38, objectFit: "contain", opacity: 0.85 }}
+            style={{ width: 32 }}
           />
         </div>
 
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div
+        <div style={{ flex: 1 }}>
+          <h3
             style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 8,
+              margin: 0,
+              fontSize: "clamp(1rem,2.5vw,1.25rem)",
+              color: "#f1f5f9",
             }}
           >
-            <h3
-              style={{
-                margin: 0,
-                fontSize: "1.25rem",
-                fontWeight: 700,
-                color: "#f1f5f9",
-                letterSpacing: "-0.01em",
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-              }}
-            >
-              {card.title}
-            </h3>
-            <span
-              style={{
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                letterSpacing: "0.04em",
-                color: "#a78bfa",
-                background: "rgba(139,92,246,0.12)",
-                border: "1px solid rgba(139,92,246,0.22)",
-                borderRadius: 999,
-                padding: "4px 12px",
-                whiteSpace: "nowrap",
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-              }}
-            >
-              {card.time}
-            </span>
-          </div>
-          <p
-            style={{
-              margin: "5px 0 0",
-              fontSize: "0.95rem",
-              fontWeight: 500,
-              color: "#64748b",
-              fontFamily: "'DM Sans', system-ui, sans-serif",
-            }}
-          >
+            {card.title}
+          </h3>
+
+          <p style={{ margin: "4px 0", color: "#64748b" }}>
             {card.companyname}
           </p>
+
+          <span
+            style={{
+              fontSize: "0.75rem",
+              color: "#a78bfa",
+            }}
+          >
+            {card.time}
+          </span>
         </div>
       </div>
 
-      {/* divider */}
-      <div style={{ height: 1, background: "rgba(255,255,255,0.05)", margin: "16px 0" }} />
+      <div
+        style={{
+          height: 1,
+          background: "rgba(255,255,255,0.05)",
+          margin: "14px 0",
+        }}
+      />
 
-      {/* desc */}
       <p
         style={{
-          margin: 0,
-          fontSize: "0.975rem",
-          lineHeight: 1.75,
+          fontSize: "clamp(0.85rem,2.3vw,0.95rem)",
           color: "#94a3b8",
-          fontFamily: "'DM Sans', system-ui, sans-serif",
+          lineHeight: 1.6,
         }}
       >
         {card.desc}
@@ -156,15 +135,8 @@ function Card({
   );
 }
 
-function TimelineCard({
-  card,
-  index,
-  isLast,
-}: {
-  card: (typeof workExperience)[0];
-  index: number;
-  isLast: boolean;
-}) {
+/* ---------- TIMELINE CARD ---------- */
+function TimelineCard({ card, index, isLast }: any) {
   const { ref, inView } = useInView(0.15);
   const [hovered, setHovered] = useState(false);
   const isLeft = index % 2 === 0;
@@ -172,15 +144,17 @@ function TimelineCard({
   return (
     <div
       ref={ref}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 48px 1fr",
-        alignItems: "flex-start",
-        position: "relative",
-      }}
+      className="grid md:grid-cols-[1fr_48px_1fr] grid-cols-[32px_1fr]"
+      style={{ alignItems: "flex-start" }}
     >
-      {/* LEFT SLOT */}
-      <div style={{ padding: "0 28px 56px 0", display: "flex", justifyContent: "flex-end" }}>
+      {/* LEFT */}
+      <div
+        style={{
+          padding: "0 clamp(10px,3vw,28px) 40px 0",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
         {isLeft && (
           <Card
             card={card}
@@ -193,43 +167,41 @@ function TimelineCard({
         )}
       </div>
 
-      {/* CENTER SPINE */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      {/* CENTER */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <div
           style={{
-            width: 16,
-            height: 16,
+            width: 14,
+            height: 14,
             borderRadius: "50%",
-            background: hovered
-              ? "linear-gradient(135deg,#a78bfa,#ec4899)"
-              : "linear-gradient(135deg,#7c3aed,#6366f1)",
-            boxShadow: hovered
-              ? "0 0 18px rgba(167,139,250,0.75)"
-              : "0 0 8px rgba(124,58,237,0.5)",
-            marginTop: 10,
-            flexShrink: 0,
-            zIndex: 2,
-            border: "2px solid rgba(139,92,246,0.35)",
-            transition: "box-shadow 0.25s ease, background 0.25s ease",
+            background: "linear-gradient(135deg,#7c3aed,#6366f1)",
           }}
         />
+
         {!isLast && (
           <div
             style={{
-              flex: 1,
               width: 2,
+              flex: 1,
               minHeight: 80,
-              marginTop: 6,
-              background:
-                "linear-gradient(to bottom,rgba(124,58,237,0.5),rgba(124,58,237,0.06))",
-              borderRadius: 2,
+              background: "rgba(124,58,237,0.3)",
             }}
           />
         )}
       </div>
 
-      {/* RIGHT SLOT */}
-      <div style={{ padding: "0 0 56px 28px", display: "flex", justifyContent: "flex-start" }}>
+      {/* RIGHT */}
+      <div
+        style={{
+          padding: "0 0 40px clamp(10px,3vw,28px)",
+        }}
+      >
         {!isLeft && (
           <Card
             card={card}
@@ -245,48 +217,43 @@ function TimelineCard({
   );
 }
 
-/* Mobile: simple left-spine list */
+/* ---------- MOBILE ---------- */
 function MobileTimeline() {
   return (
-    <div className="md:hidden" style={{ maxWidth: 520, margin: "0 auto", padding: "0 1rem" }}>
+    <div
+      className="md:hidden"
+      style={{
+        maxWidth: 520,
+        margin: "0 auto",
+        padding: "0 clamp(12px,4vw,20px)",
+      }}
+    >
       {workExperience.map((card, i) => {
         const isLast = i === workExperience.length - 1;
+
         return (
-          <div key={card.id} style={{ display: "flex", gap: 0 }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: 32,
-                flexShrink: 0,
-              }}
-            >
+          <div key={card.id} style={{ display: "flex" }}>
+            <div style={{ width: 28 }}>
               <div
                 style={{
-                  width: 12,
-                  height: 12,
+                  width: 10,
+                  height: 10,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg,#7c3aed,#6366f1)",
-                  boxShadow: "0 0 8px rgba(124,58,237,0.5)",
-                  marginTop: 10,
-                  flexShrink: 0,
+                  background: "#7c3aed",
                 }}
               />
               {!isLast && (
                 <div
                   style={{
-                    flex: 1,
                     width: 2,
-                    marginTop: 6,
-                    background:
-                      "linear-gradient(to bottom,rgba(124,58,237,0.4),rgba(124,58,237,0.05))",
-                    borderRadius: 2,
+                    height: 60,
+                    background: "#7c3aed",
                   }}
                 />
               )}
             </div>
-            <div style={{ flex: 1, marginLeft: 14, paddingBottom: isLast ? 0 : 28 }}>
+
+            <div style={{ flex: 1, marginLeft: 12, paddingBottom: 24 }}>
               <Card
                 card={card}
                 hovered={false}
@@ -303,28 +270,35 @@ function MobileTimeline() {
   );
 }
 
-const Experience = () => {
+/* ---------- MAIN ---------- */
+export default function Experience() {
   useEffect(() => {
     const id = "dm-sans-exp";
     if (document.getElementById(id)) return;
+
     const link = document.createElement("link");
     link.id = id;
     link.rel = "stylesheet";
     link.href =
       "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap";
+
     document.head.appendChild(link);
   }, []);
 
   return (
-    <div className="py-20 w-full">
-      <h1 className="heading">
-        My <span className="text-purple">work experience</span>
+    <div className="py-20 w-full" style={{ overflowX: "hidden" }}>
+       <h1 className="heading mb-16">
+        My <span className="text-purple">Work Experience</span>
       </h1>
 
-      {/* Desktop alternating timeline */}
+      {/* Desktop */}
       <div
         className="hidden md:block"
-        style={{ maxWidth: 1400, margin: "3rem auto 0", marginBottom : 0, padding: "0 2.5rem" }}
+        style={{
+          maxWidth: 1200,
+          margin: "3rem auto",
+          padding: "0 2rem",
+        }}
       >
         {workExperience.map((card, i) => (
           <TimelineCard
@@ -336,12 +310,8 @@ const Experience = () => {
         ))}
       </div>
 
-      {/* Mobile left-spine timeline */}
-      <div style={{ marginTop: "2.5rem" }}>
-        <MobileTimeline />
-      </div>
+      {/* Mobile */}
+      <MobileTimeline />
     </div>
   );
-};
-
-export default Experience;
+}

@@ -29,9 +29,6 @@ const SKILLS: Skill[] = [
   { name: "VS Code",     color: "#007ACC", href: "https://code.visualstudio.com/",               image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
 ];
 
-
-
-
 function useInView(threshold = 0.08) {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
@@ -50,6 +47,14 @@ function useInView(threshold = 0.08) {
 
 function Chip({ skill, index, animate }: { skill: Skill; index: number; animate: boolean }) {
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const inner = (
     <div
@@ -60,9 +65,10 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 10,
-        padding: "22px 10px 16px",
-        borderRadius: 16,
+        // Mobile styles only - desktop unchanged
+        gap: isMobile ? 6 : 10,
+        padding: isMobile ? "12px 6px 10px" : "22px 10px 16px",
+        borderRadius: isMobile ? 12 : 16,
         border: `1px solid ${hovered ? skill.color + "55" : "rgba(255,255,255,0.07)"}`,
         background: hovered ? skill.color + "14" : "rgba(13,12,30,0.72)",
         backdropFilter: "blur(12px)",
@@ -70,27 +76,41 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
         userSelect: "none" as const,
         opacity: animate ? 1 : 0,
         transform: animate
-          ? hovered ? "translateY(-6px) scale(1.06)" : "translateY(0) scale(1)"
-          : "translateY(18px)",
-        transition: `
-          opacity 0.4s ease ${index * 35}ms,
-          transform ${animate ? "0.28s cubic-bezier(0.34,1.56,0.64,1)" : `0.5s ease ${index * 35}ms`},
-          border-color 0.2s ease,
-          background 0.2s ease,
-          box-shadow 0.2s ease
-        `,
+          ? hovered 
+            ? (isMobile ? "translateY(-3px) scale(1.03)" : "translateY(-6px) scale(1.06)")
+            : "translateY(0) scale(1)"
+          : (isMobile ? "translateY(12px)" : "translateY(18px)"),
+        transition: isMobile
+          ? `
+            opacity 0.3s ease ${index * 25}ms,
+            transform ${animate ? "0.22s cubic-bezier(0.34,1.56,0.64,1)" : `0.4s ease ${index * 25}ms`},
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease
+          `
+          : `
+            opacity 0.4s ease ${index * 35}ms,
+            transform ${animate ? "0.28s cubic-bezier(0.34,1.56,0.64,1)" : `0.5s ease ${index * 35}ms`},
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease
+          `,
         boxShadow: hovered
-          ? `0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px ${skill.color}30`
-          : "0 2px 8px rgba(0,0,0,0.3)",
-        minHeight: 105,
+          ? isMobile
+            ? `0 6px 15px rgba(0,0,0,0.4), 0 0 0 1px ${skill.color}30`
+            : `0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px ${skill.color}30`
+          : isMobile
+            ? "0 1px 4px rgba(0,0,0,0.2)"
+            : "0 2px 8px rgba(0,0,0,0.3)",
+        minHeight: isMobile ? 80 : 105,
       }}
     >
-      {/* logo — devicons are already colored, NO filter needed */}
+      {/* logo container */}
       <div
         style={{
-          width: 52,
-          height: 52,
-          borderRadius: 12,
+          width: isMobile ? 36 : 52,
+          height: isMobile ? 36 : 52,
+          borderRadius: isMobile ? 10 : 12,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -102,8 +122,8 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
         <img
           src={skill.image}
           alt={skill.name}
-          width={32}
-          height={32}
+          width={isMobile ? 22 : 32}
+          height={isMobile ? 22 : 32}
           loading="lazy"
           style={{ objectFit: "contain", display: "block" }}
           onError={(e) => {
@@ -112,7 +132,11 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
             if (p) {
               const s = document.createElement("span");
               s.textContent = skill.name.slice(0, 2).toUpperCase();
-              Object.assign(s.style, { fontSize: "14px", fontWeight: "700", color: skill.color });
+              Object.assign(s.style, { 
+                fontSize: isMobile ? "10px" : "14px", 
+                fontWeight: "700", 
+                color: skill.color 
+              });
               p.appendChild(s);
             }
           }}
@@ -122,7 +146,7 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
       {/* name */}
       <span
         style={{
-          fontSize: "0.73rem",
+          fontSize: isMobile ? "0.65rem" : "0.73rem",
           fontWeight: 600,
           color: hovered ? "#e2e8f0" : "#64748b",
           fontFamily: "'DM Sans', system-ui, sans-serif",
@@ -151,6 +175,7 @@ function Chip({ skill, index, animate }: { skill: Skill; index: number; animate:
 export default function TechStack() {
   const { ref, inView } = useInView();
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -161,8 +186,12 @@ export default function TechStack() {
     link.rel = "stylesheet";
     link.href = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap";
     document.head.appendChild(link);
+    
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
 
   return (
     <section
@@ -171,22 +200,26 @@ export default function TechStack() {
         width: "100%",
         maxWidth: 1100,
         margin: "0 auto",
-        padding: "3rem 1.5rem",
+        padding: isMobile ? "2rem 1rem" : "3rem 1.5rem",
         boxSizing: "border-box",
         fontFamily: "'DM Sans', system-ui, sans-serif",
       }}
     >
       {/* heading */}
-      <div style={{ marginBottom: "1.75rem" }}>
+      <div style={{ marginBottom: isMobile ? "1.5rem" : "1.75rem" }}>
         <h1 className="heading">
-        My <span className="text-purple">Tech Stack</span>
-      </h1>
+          My <span className="text-purple">Tech Stack</span>
+        </h1>
       </div>
 
-      {/* 6-col grid — 3 on mobile, 4 on tablet, 6 on desktop */}
+      {/* grid - mobile gets tighter gap and 3 columns */}
       <div
         className="grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
-        style={{ display: "grid", gap: "0.75rem" }}
+        style={{ 
+          display: "grid", 
+          gap: isMobile ? "0.5rem" : "0.75rem",
+          gridTemplateColumns: isMobile ? "repeat(3, minmax(0, 1fr))" : undefined
+        }}
       >
         {SKILLS.map((skill, i) => (
           <Chip key={skill.name} skill={skill} index={i} animate={inView && mounted} />
