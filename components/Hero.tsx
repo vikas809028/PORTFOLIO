@@ -10,7 +10,7 @@ const Hero = () => {
     <div className="pb-12 pt-36">
       <Suspense fallback={<div>Loading...</div>}>
         {/* Lazy-loaded components */}
-        <div className="flex justify-center relative my-20 z-10">
+        <div className="flex justify-center relative my-10 md:my-20 z-10">
           <div className="max-w-[89vw] md:max-w-3xl lg:max-w-[70vw] flex flex-col items-center justify-center">
             <TextGenerateEffect
               words="Transforming Concepts into Seamless User Experiences"
