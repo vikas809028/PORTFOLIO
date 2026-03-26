@@ -240,7 +240,7 @@ export default function Grid() {
                 <p style={{ 
                   margin:0, 
                   fontSize: isMobile ? "0.75rem" : "0.95rem", 
-                  color:"#475569", 
+                  color:"#f1f5f9", 
                   wordBreak:"break-all" 
                 }}>
                   vikastiwari809028@gmail.com

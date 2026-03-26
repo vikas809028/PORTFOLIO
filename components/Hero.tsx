@@ -38,7 +38,7 @@ const Hero = () => {
             <div className="flex flex-wrap mt-4 gap-2 justify-center">
               <a
                 className="m-2"
-                href="https://drive.google.com/file/d/1XocMBZQgnFDwhq8RvLQ9TkWGFeFpTVN3/view?usp=sharing"
+                href=" https://drive.google.com/file/d/1hxeQYByyQnGGXXJ9wmf0fbl8DRaZxrwt/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
               >
