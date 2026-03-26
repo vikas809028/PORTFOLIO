@@ -1,17 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { socialMedia } from "@/data";
 import MagicButton from "./ui/MagicButton";
 
 const Footer = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [currentYear, setCurrentYear] = useState(2026);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Social media links with React Icons
+  const socialLinks = [
+    { 
+      id: 1, 
+      url: "https://github.com/vikas809028", 
+      name: "GitHub",
+      icon: FaGithub,
+      color: "#ffffff"
+    },
+    { 
+      id: 2, 
+      url: "https://linkedin.com/in/vikas-tiwari-62a963238", 
+      name: "LinkedIn",
+      icon: FaLinkedin,
+      color: "#0A66C2"
+    },
+    { 
+      id: 3, 
+      url: "https://x.com/vikas_tiwari80", 
+      name: "X",
+      icon: FaTwitter,
+      color: "#1DA1F2"
+    },
+  ];
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -23,23 +47,15 @@ const Footer = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Function to get social media name from image path
-  const getSocialMediaName = (imgPath: string) => {
-    const name = imgPath.split('/').pop()?.replace('.svg', '') || '';
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
   // Colorful animation variants for social icons
   const iconVariants = {
     initial: { 
       scale: 1,
       rotate: 0,
-      filter: "brightness(1) saturate(1)"
     },
     hover: { 
       scale: isMobile ? 1.1 : 1.2,
       rotate: [0, -10, 10, -5, 5, 0],
-      filter: "brightness(1.2) saturate(1.5) drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))",
       transition: { 
         duration: 0.4,
         rotate: { duration: 0.5, ease: "easeInOut" }
@@ -51,26 +67,15 @@ const Footer = () => {
   // Background gradient animation for icons
   const backgroundVariants = {
     initial: {
-      background: "linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(59,130,246,0.1) 100%)",
+      background: "rgba(0,0,0,0.75)",
       borderColor: "rgba(139,92,246,0.3)"
     },
     hover: {
-      background: "linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(59,130,246,0.2) 100%)",
-      borderColor: "rgba(139,92,246,0.6)",
+      background: "rgba(0,0,0,0.85)",
+      borderColor: "rgba(139,92,246,0.8)",
       boxShadow: "0 0 20px rgba(139,92,246,0.3)",
       transition: { duration: 0.3 }
     }
-  };
-
-  // Colorful animation for the CTA button
-  const buttonVariants = {
-    initial: { scale: 1, boxShadow: "0 0 0px rgba(139,92,246,0)" },
-    hover: { 
-      scale: isMobile ? 1.02 : 1.05,
-      boxShadow: "0 0 25px rgba(139,92,246,0.5)",
-      transition: { duration: 0.3, yoyo: Infinity, repeatDelay: 1 }
-    },
-    tap: { scale: 0.98 }
   };
 
   // Floating animation for the entire footer
@@ -89,6 +94,11 @@ const Footer = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
+  };
+
+  // Handle social media click
+  const handleSocialClick = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -156,31 +166,14 @@ const Footer = () => {
           achieve your goals.
         </motion.p>
         
-        <motion.div
-          variants={buttonVariants}
-          initial="initial"
-          whileHover="hover"
-          whileTap="tap"
-          animate={!isMobile ? {
-            y: [0, -5, 0],
-          } : {}}
-          transition={{
-            y: {
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }
-          }}
-        >
-          <a href="mailto:vikastiwari809028@gmail.com">
-            <MagicButton
-              title="Let's get in touch"
-              icon={<FaLocationArrow />}
-              position="right"
-            />
-          </a>
-        </motion.div>
+        {/* "Let's get in touch" button - hover effect removed */}
+        <a href="mailto:vikastiwari809028@gmail.com">
+          <MagicButton
+            title="Let's get in touch"
+            icon={<FaLocationArrow />}
+            position="right"
+          />
+        </a>
       </motion.div>
 
       <motion.div 
@@ -196,89 +189,98 @@ const Footer = () => {
         </motion.p>
 
         <div className={`flex items-center ${isMobile ? "gap-4" : "md:gap-3 gap-6"}`}>
-          {socialMedia.map((info, index) => (
-            <motion.div
-              key={info.id}
-              className="relative cursor-pointer"
-              onMouseEnter={() => !isMobile && setHoveredIndex(index)}
-              onMouseLeave={() => !isMobile && setHoveredIndex(null)}
-              variants={iconVariants}
-              initial="initial"
-              whileHover={!isMobile ? "hover" : undefined}
-              whileTap="tap"
-              animate={{
-                y: !isMobile && hoveredIndex === index ? -5 : 0,
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              {/* Glow effect behind icon */}
+          {socialLinks.map((info, index) => {
+            const IconComponent = info.icon;
+            return (
               <motion.div
-                className="absolute inset-0 rounded-lg blur-md"
-                animate={{
-                  opacity: !isMobile && hoveredIndex === index ? 0.8 : 0,
-                  scale: !isMobile && hoveredIndex === index ? 1.2 : 1,
-                }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  background: "radial-gradient(circle, rgba(139,92,246,0.6) 0%, rgba(59,130,246,0.4) 100%)",
-                }}
-              />
-              
-              {/* Icon container with animated background */}
-              <motion.div
-                className={`${isMobile ? "w-8 h-8" : "w-10 h-10"} flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 rounded-lg border relative overflow-hidden`}
-                variants={backgroundVariants}
+                key={info.id}
+                className="relative cursor-pointer"
+                onClick={() => handleSocialClick(info.url)}
+                onMouseEnter={() => !isMobile && setHoveredIndex(index)}
+                onMouseLeave={() => !isMobile && setHoveredIndex(null)}
+                variants={iconVariants}
                 initial="initial"
                 whileHover={!isMobile ? "hover" : undefined}
-                style={{
-                  background: "rgba(0,0,0,0.75)",
-                  borderWidth: "1px",
+                whileTap="tap"
+                animate={{
+                  y: !isMobile && hoveredIndex === index ? -5 : 0,
                 }}
+                transition={{ duration: 0.2 }}
               >
-                {/* Animated gradient overlay on hover */}
+                {/* Glow effect behind icon */}
                 <motion.div
-                  className="absolute inset-0 opacity-0"
+                  className="absolute inset-0 rounded-lg blur-md"
                   animate={{
-                    opacity: !isMobile && hoveredIndex === index ? 0.3 : 0,
+                    opacity: !isMobile && hoveredIndex === index ? 0.8 : 0,
+                    scale: !isMobile && hoveredIndex === index ? 1.2 : 1,
                   }}
                   transition={{ duration: 0.3 }}
                   style={{
-                    background: "linear-gradient(135deg, #8b5cf6, #3b82f6, #ec489a)",
+                    background: `radial-gradient(circle, ${info.color}80 0%, rgba(139,92,246,0.4) 100%)`,
                   }}
                 />
                 
-                {/* Icon image with color animation */}
-                <motion.img 
-                  src={info.img} 
-                  alt={`Social media icon ${index + 1}`}
-                  width={isMobile ? 16 : 20}
-                  height={isMobile ? 16 : 20}
-                  className="relative z-10"
-                  animate={{
-                    filter: !isMobile && hoveredIndex === index 
-                      ? "brightness(1.2) saturate(1.5) drop-shadow(0 0 4px rgba(139,92,246,0.8))" 
-                      : "brightness(1) saturate(1)",
-                  }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.div>
-
-              {/* Tooltip on hover - only on desktop */}
-              {!isMobile && (
+                {/* Icon container with animated background */}
                 <motion.div
-                  className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 rounded text-xs whitespace-nowrap pointer-events-none"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    y: hoveredIndex === index ? 0 : 10,
+                  className={`${isMobile ? "w-9 h-9" : "w-11 h-11"} flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-180 bg-opacity-75 rounded-lg border relative overflow-hidden`}
+                  variants={backgroundVariants}
+                  initial="initial"
+                  whileHover={!isMobile ? "hover" : undefined}
+                  style={{
+                    background: "rgba(0,0,0,0.75)",
+                    borderWidth: "1px",
                   }}
-                  transition={{ duration: 0.2 }}
                 >
-                  {getSocialMediaName(info.img)}
+                  {/* Animated gradient overlay on hover */}
+                  <motion.div
+                    className="absolute inset-0 opacity-0"
+                    animate={{
+                      opacity: !isMobile && hoveredIndex === index ? 0.3 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    style={{
+                      background: `linear-gradient(135deg, ${info.color}, #8b5cf6, #ec489a)`,
+                    }}
+                  />
+                  
+                  {/* Icon with color animation */}
+                  <motion.div
+                    className="relative z-10"
+                    animate={{
+                      scale: !isMobile && hoveredIndex === index ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <IconComponent 
+                      size={isMobile ? 18 : 22}
+                      style={{
+                        color: !isMobile && hoveredIndex === index ? info.color : "#ffffff",
+                        filter: !isMobile && hoveredIndex === index 
+                          ? `drop-shadow(0 0 6px ${info.color})` 
+                          : "none",
+                        transition: "all 0.3s ease"
+                      }}
+                    />
+                  </motion.div>
                 </motion.div>
-              )}
-            </motion.div>
-          ))}
+
+                {/* Tooltip on hover - only on desktop */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-900 rounded text-xs whitespace-nowrap pointer-events-none"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{
+                      opacity: hoveredIndex === index ? 1 : 0,
+                      y: hoveredIndex === index ? 0 : 10,
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {info.name}
+                  </motion.div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
 
